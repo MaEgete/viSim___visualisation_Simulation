@@ -24,8 +24,8 @@ struct Visualizer {
     Color background;
     size_t beamCount;
 
-    int (*addBeam)(const struct Beam*);
-    void (*removeBeam)(int);
+    int (*addBeam)(struct Visualizer*, const struct Beam*);
+    void (*removeBeam)(struct Visualizer*, int);
     void (*clearBeams)();
     struct Beam* (*getBeam)(int);
     void (*setBeam)(const struct Beam*);
@@ -75,6 +75,61 @@ bool addBeam(struct Visualizer* visualizer, const struct Beam* newBeam) {
     return true;
 
 }
+
+void removeBeam(struct Visualizer* visualizer, int index) {
+
+    if (visualizer == NULL || index < 0 || index >= visualizer->beamCount) {
+        return;
+    }
+
+
+    // Beam mit Index int entfernen, und Lücke wieder füllen
+
+    // Also alle Beams nach Index irgendwie speichern
+
+    // Alle Beams vor Index reallocen
+
+    // Danach wieder realloc machen
+
+    // Danach alle Beam nach Index hinzufügen wieder zur Liste
+
+    /*
+     *
+     *  |--0--||--1--||--INDEX--||--3--||--4--|
+     *
+     *  Extern speichern: |--3--||--4--|
+     *
+     *  Realloc: |--0--||--1--|
+     *
+     *  Realloc: |--0--||--1--||--3--||--4--|
+     *
+     */
+
+
+    // letztes Element wird entfernt
+    if (index == visualizer->beamCount - 1) {
+
+        struct Beam* tmp = realloc(visualizer->beam, (visualizer->beamCount - 1) * sizeof(struct Beam));
+
+        if (tmp == NULL) {
+            perror("removeBeam");
+            return;
+        }
+
+        visualizer->beamCount--;
+        visualizer->beam = tmp;
+
+        return;
+    }
+
+
+    // Alle Beams nach index
+    struct Beam* tmp = malloc(visualizer->be)
+
+        &visualizer->beam[index];
+
+}
+
 
 
 
