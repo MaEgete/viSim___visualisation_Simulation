@@ -6,10 +6,23 @@
 // Create the Visualizer
 // Returns empty Beam with flag 'valid' = false if the function parameters are not valid
 // otherwise it returns a full struct Beam
+
+// Datatype and beam_value must be the same
 struct Beam createBeam(float x, float y, float width, float height, Color color, BeamValue beam_value, Datatype datatype) {
 
+    // Check if the input string is NULL
+    if (datatype == TYPE_STRING) {
+        if (beam_value.string == NULL) {
+            return (struct Beam){
+                .valid = false,
+            };
+        }
+    }
+
+
+
     // check conditions
-    if (x < 0 || y < 0 || width <= 0 || height <= 0) {
+    if (x < 0 || y < 0 || width <= 0 || height <= 0 || color.r < 0 || color.g < 0 || color.b < 0 || color.a < 0) {
         // if the parameters are not valid
         return (struct Beam){
             // set valid flag to false

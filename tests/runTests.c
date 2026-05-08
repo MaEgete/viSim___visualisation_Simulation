@@ -9,6 +9,8 @@ void runAllTests() {
 
 void runBeamTests() {
     test_createBeam_with_Float_val();
+    test_createBeam_with_String_val();
+    test_createBeam_with_not_valid_values();
 }
 
 void runVisualizerTests() {

@@ -11,6 +11,7 @@
 typedef enum {
     TYPE_FLOAT,
     TYPE_STRING,
+    TYPE_NONE,
 } Datatype;
 
 // The specific value to compare
