@@ -112,7 +112,7 @@ void test_createBeam_with_not_valid_values() {
     beam = createBeam(10, 10, 10, 0, WHITE, (BeamValue){0}, TYPE_FLOAT);
     assert(beam.valid == false);
 
-    // height
+    // beamvalue string
     beam = createBeam(10, 10, 10, 0, WHITE, (BeamValue){.string = NULL}, TYPE_STRING);
     assert(beam.valid == false);
 
