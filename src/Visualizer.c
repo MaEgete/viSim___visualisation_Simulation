@@ -1,8 +1,23 @@
-
 #include "Visualizer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+
+// Create the Visualizer -- constructor
+struct Visualizer createVisualizer() {
+    struct Visualizer visualizer;
+
+    visualizer.beam = NULL;
+    visualizer.beamCount = 0;
+    visualizer.background = GRAY;
+
+
+    return visualizer;
+}
+
+
+
 
 // Returns true if 'newBeam' was successfully added otherwise false
 bool addBeam(struct Visualizer* visualizer, const struct Beam* newBeam) {
@@ -37,35 +52,13 @@ bool addBeam(struct Visualizer* visualizer, const struct Beam* newBeam) {
 
 void removeBeam(struct Visualizer* visualizer, int index) {
 
+    // if one of function parameters is not valid then nothing will happen
     if (visualizer == NULL || index < 0 || index >= visualizer->beamCount) {
         return;
     }
 
 
-    // Beam mit Index int entfernen, und Lücke wieder füllen
-
-    // Also alle Beams nach Index irgendwie speichern
-
-    // Alle Beams vor Index reallocen
-
-    // Danach wieder realloc machen
-
-    // Danach alle Beam nach Index hinzufügen wieder zur Liste
-
-    /*
-     *
-     *  |--0--||--1--||--INDEX--||--3--||--4--|
-     *
-     *  Extern speichern: |--3--||--4--|
-     *
-     *  Realloc: |--0--||--1--|
-     *
-     *  Realloc: |--0--||--1--||--3--||--4--|
-     *
-     */
-
-
-    // letztes Element wird entfernt
+    // remove the last beam item
     if (index == visualizer->beamCount - 1) {
 
         struct Beam* tmp = realloc(visualizer->beam, (visualizer->beamCount - 1) * sizeof(struct Beam));
@@ -92,12 +85,3 @@ void removeBeam(struct Visualizer* visualizer, int index) {
 
 
 
-struct Visualizer createVisualizer() {
-    struct Visualizer visualizer;
-
-    visualizer.beam = NULL;
-    visualizer.beamCount = 0;
-
-
-    return visualizer;
-}

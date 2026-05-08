@@ -9,6 +9,8 @@
 #include "Beam.h"
 #include <stddef.h>
 
+
+
 // Visualizes the algorithms in the form of a beam
 struct Visualizer {
 
@@ -48,6 +50,9 @@ struct Visualizer {
     void (*destroyVisualizer)();
 
 };
+
+// Create the Visualizer -- constructor
+struct Visualizer createVisualizer();
 
 
 #endif //VISIM___VISUALISATION_SIMULATION_VISUALIZER_H

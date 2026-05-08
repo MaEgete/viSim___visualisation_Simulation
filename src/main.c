@@ -4,9 +4,17 @@
 
 #include "Visualizer.h"
 
+#include "../tests/runTests.h"
 
+#define TESTS
 
 int main() {
+
+#ifdef TESTS
+    runAllTests();
+#endif
+
+
     InitWindow(800, 450, "viSim");
 
     while (!WindowShouldClose()) {
