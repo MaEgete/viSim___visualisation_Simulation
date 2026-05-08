@@ -5,7 +5,11 @@ set(CMAKE_C_STANDARD 11)
 
 find_package(raylib REQUIRED)
 
-add_executable(viSim___visualisation_Simulation main.c)
+add_executable(viSim___visualisation_Simulation main.c
+        Visualizer.h
+        Beam.h
+        Visualizer.c
+        Beam.c)
 
 
 target_link_libraries(viSim___visualisation_Simulation PRIVATE raylib)
