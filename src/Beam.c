@@ -1,6 +1,6 @@
 #include "Beam.h"
 #include <string.h>
-
+#include <stdio.h>
 
 void setBeamColor(struct Beam* beam, Color color);
 void setBeamWidth(struct Beam* beam, float width);
@@ -78,6 +78,12 @@ struct Beam createBeam(float x, float y, float width, float height, Color color,
 
 // Set the color of the beam
 void setBeamColor(struct Beam* beam, Color color) {
+
+    if (color.r < 0 || color.g < 0 || color.b < 0 || color.a < 0 ||
+        color.r > 255 || color.g > 255 || color.b > 255 || color.a > 255) {
+        return;
+    }
+
     beam->color = color;
 }
 
@@ -123,6 +129,26 @@ void setBeamPosition(struct Beam* beam, float x, float y) {
 
 // Set the beamValue of the beam
 void setBeamValue(struct Beam* beam, BeamValue value, Datatype datatype) {
+
+
+    // conditions
+    if (beam == NULL || datatype == TYPE_NONE || !isValid(beam)) {
+        return;
+    }
+
+
+    // New datatype must be the same
+    if (beam->datatype != datatype) {
+        return;
+    }
+
+    // string must not be NULL or empty
+    if (datatype == TYPE_STRING) {
+        if (value.string == NULL || strcmp(value.string, "") == 0) {
+            return;
+        }
+    }
+
     beam->datatype = datatype;
     beam->beamValue = value;
 }

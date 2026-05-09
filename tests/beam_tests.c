@@ -6,6 +6,9 @@
 #include "../src/Beam.h"
 #include <string.h>
 
+struct Beam init() {
+    return createBeam(10, 10, 10, 10, WHITE, (BeamValue){0}, TYPE_FLOAT);
+}
 
 void test_createBeam_with_Float_val() {
 
@@ -146,12 +149,124 @@ void test_createBeam_with_not_valid_values() {
 }
 
 void test_setBeamColor() {
-    struct Beam beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){0}, TYPE_FLOAT);
+    struct Beam beam = init();
     beam.setBeamColor(&beam, (Color){255,100,100,100});
 
     assert(beam.color.r == 255);
     assert(beam.color.g == 100);
     assert(beam.color.b == 100);
     assert(beam.color.a == 100);
+
+}
+
+void test_setBeamColor_with_not_valid_values() {
+
+    struct Beam beam = init();
+    beam.setBeamColor(&beam, (Color){-1,255,255,255});
+    assert(beam.color.r == 255);
+
+    beam.setBeamColor(&beam, (Color){255,-1,255,255});
+    assert(beam.color.g == 255);
+
+    beam.setBeamColor(&beam, (Color){255,255,-1,255});
+    assert(beam.color.b == 255);
+
+    beam.setBeamColor(&beam, (Color){255,255,255,-1});
+    assert(beam.color.a == 255);
+
+
+}
+
+void test_setBeamWidth() {
+    struct Beam beam = init();
+    beam.setBeamWidth(&beam, 100);
+
+    assert(beam.width == 100);
+}
+
+void test_setBeamWidth_with_not_valid_values() {
+    struct Beam beam = init();
+    beam.setBeamWidth(&beam, 0);
+    assert(beam.width == 1);
+}
+
+void test_setBeamHeight() {
+    struct Beam beam = init();
+    beam.setBeamHeight(&beam, 100);
+    assert(beam.height == 100);
+}
+
+void test_setBeamHeight_with_not_valid_values() {
+    struct Beam beam = init();
+    beam.setBeamHeight(&beam, 0);
+    assert(beam.height == 1);
+}
+
+void test_setBeamPosition() {
+    struct Beam beam = init();
+
+    beam.setBeamPosition(&beam, 100, 100);
+    assert(beam.x == 100);
+    assert(beam.y == 100);
+
+}
+
+void test_setBeamPosition_with_not_valid_values() {
+    struct Beam beam = init();
+
+    beam.setBeamPosition(&beam, -1, 0);
+    assert(beam.x == 10);
+    assert(beam.y = 10);
+
+    beam.setBeamPosition(&beam, 0, -1);
+    assert(beam.x == 10);
+    assert(beam.y = 10);
+
+}
+
+void test_setBeamValue() {
+
+    // Default: Datatype TYPE_FLOAT, value = 0.0f;
+    struct Beam beam = init();
+
+    // change float
+    beam.setBeamValue(&beam, (BeamValue){10.0f}, TYPE_FLOAT);
+    assert(beam.beamValue.float_number == 10.0f);
+
+
+    // false type
+    beam.setBeamValue(&beam, (BeamValue){100.0f}, TYPE_NONE);
+    assert(beam.beamValue.float_number != 100.0f);
+    beam.setBeamValue(&beam, (BeamValue){100.0f}, TYPE_STRING);
+    assert(beam.beamValue.float_number != 100.0f);
+
+    // !isValid
+    beam.valid = !beam.valid;
+    beam.setBeamValue(&beam, (BeamValue){100.0f}, TYPE_FLOAT);
+    assert(beam.beamValue.float_number != 100.0f);
+
+    // string not NULL or empty
+    beam.beamValue.string = "HI";
+    beam.datatype = TYPE_STRING;
+    beam.valid = !beam.valid;
+
+    beam.setBeamValue(&beam, (BeamValue){.string = NULL}, TYPE_STRING);
+    assert(strcmp(beam.beamValue.string, "HI") == 0);
+
+    beam.setBeamValue(&beam, (BeamValue){.string = ""}, TYPE_STRING);
+    assert(strcmp(beam.beamValue.string, "HI") == 0);
+
+    // change string
+    beam.setBeamValue(&beam, (BeamValue){.string = "WELT"}, TYPE_STRING);
+    assert(strcmp(beam.beamValue.string, "WELT") == 0);
+
+}
+
+void test_isValid() {
+    struct Beam beam = init();
+    assert(beam.valid == beam.isValid(&beam));
+
+    beam.valid = !beam.valid;
+    assert(beam.valid == beam.isValid(&beam));
 
 }
