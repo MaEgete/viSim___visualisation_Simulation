@@ -7,5 +7,6 @@ void test_createBeam_with_String_val();
 
 void test_createBeam_with_not_valid_values();
 
+void test_setBeamColor();
 
 #endif

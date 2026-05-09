@@ -2,8 +2,15 @@
 #include <string.h>
 
 
+void setBeamColor(struct Beam* beam, Color color);
+void setBeamWidth(struct Beam* beam, float width);
+void setBeamHeight(struct Beam* beam, float height);
+void setBeamPosition(struct Beam* beam, float x, float y);
+void setBeamValue(struct Beam* beam, BeamValue value, Datatype datatype);
+bool isValid(const struct Beam* beam);
 
-// Create the Visualizer
+
+// Create the Beam
 // Returns empty Beam with flag 'valid' = false if the function parameters are not valid
 // otherwise it returns a full struct Beam
 
@@ -12,7 +19,7 @@ struct Beam createBeam(float x, float y, float width, float height, Color color,
 
     // Check if the input string is NULL
     if (datatype == TYPE_STRING) {
-        if (beam_value.string == NULL) {
+        if (beam_value.string == NULL || strlen(beam_value.string) == 0) {
             return (struct Beam){
                 .valid = false,
             };
@@ -22,7 +29,10 @@ struct Beam createBeam(float x, float y, float width, float height, Color color,
 
 
     // check conditions
-    if (x < 0 || y < 0 || width <= 0 || height <= 0 || color.r < 0 || color.g < 0 || color.b < 0 || color.a < 0) {
+    if (x < 0 || y < 0 || width <= 0 || height <= 0 ||
+        color.r < 0 || color.g < 0 || color.b < 0 || color.a < 0 ||
+        color.r > 255 || color.g > 255 || color.b > 255 || color.a > 255 ||
+        datatype == TYPE_NONE) {
         // if the parameters are not valid
         return (struct Beam){
             // set valid flag to false
@@ -48,10 +58,21 @@ struct Beam createBeam(float x, float y, float width, float height, Color color,
     // Beam is valid
     beam.valid = true;
 
+    // Functionpointers
+
+    beam.setBeamColor = setBeamColor;
+
+    beam.setBeamWidth = setBeamWidth;
+    beam.setBeamHeight = setBeamHeight;
+
+    beam.setBeamPosition = setBeamPosition;
+
+    beam.setBeamValue = setBeamValue;
+
+    beam.isValid = isValid;
+
     return beam;
 }
-
-
 
 
 

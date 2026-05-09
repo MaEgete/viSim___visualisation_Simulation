@@ -113,7 +113,45 @@ void test_createBeam_with_not_valid_values() {
     assert(beam.valid == false);
 
     // beamvalue string
-    beam = createBeam(10, 10, 10, 0, WHITE, (BeamValue){.string = NULL}, TYPE_STRING);
+    beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){.string = NULL}, TYPE_STRING);
     assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){.string = ""}, TYPE_STRING);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){0}, TYPE_STRING);
+    assert(beam.valid == false);
+
+    // datatype
+    beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){0}, TYPE_NONE);
+    assert(beam.valid == false);
+
+    // color
+    beam = createBeam(10, 10, 10, 0, (Color){-1,0,0,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,-1,0,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,0,-1,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,0,0,-1}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+
+    beam = createBeam(10, 10, 10, 0, (Color){256,0,0,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,256,0,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,0,256,0}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+    beam = createBeam(10, 10, 10, 0, (Color){0,0,0,256}, (BeamValue){0}, TYPE_FLOAT);
+    assert(beam.valid == false);
+
+}
+
+void test_setBeamColor() {
+    struct Beam beam = createBeam(10, 10, 10, 10, WHITE, (BeamValue){0}, TYPE_FLOAT);
+    beam.setBeamColor(&beam, (Color){255,100,100,100});
+
+    assert(beam.color.r == 255);
+    assert(beam.color.g == 100);
+    assert(beam.color.b == 100);
+    assert(beam.color.a == 100);
 
 }

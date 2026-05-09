@@ -62,7 +62,7 @@ struct Beam {
     void (*setBeamValue)(struct Beam*, BeamValue, Datatype);
 
     // Returns true if the struct is valid
-    bool (*isValid)(struct Beam*);
+    bool (*isValid)(const struct Beam*);
 
 };
 
